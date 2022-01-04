@@ -11,13 +11,14 @@ from flask import Flask, request
 
 
 
+
 server = Flask(__name__)
 load_dotenv()
 
  
 
 
-'''===========================DB CONNECTION==============================='''
+'''===========================DB CONNECTION===============================
 import psycopg2
 conn = psycopg2.connect(
     host=os.environ.get('host'),
@@ -29,10 +30,10 @@ conn = psycopg2.connect(
 
 cursor = conn.cursor()
 
-'''=========================TELEGRAM==============================='''
+=========================TELEGRAM==============================='''
 
 
-API_KEY = os.environ.get('API_KEY')
+API_KEY ='5051244909:AAENSR45-6Vi25dOQrpRWeSfL5TvBub0SnE'
 
 bot = telebot.TeleBot(API_KEY,parse_mode='None')
 
@@ -56,7 +57,7 @@ def send_welcome(message):
         print(len(msg))
         bot.reply_to(message, "Message too long")
     print(message.text)
-
+'''
 @bot.message_handler(func=lambda message: True, commands=['image'])
 def test(message):
    text_message = 'Upload a photo' 
@@ -89,7 +90,7 @@ def test2(message):
     except Exception as e:
         bot.reply_to(message, "ERROR!!! not supported with this format")
         print(e)
-    
+ ''' 
 
 @server.route('/' + API_KEY, methods=['POST'])
 def getMessage():
