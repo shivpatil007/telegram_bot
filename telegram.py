@@ -5,7 +5,8 @@ from pyqrcode import QRCode
 import base64
 import string
 import random
-  
+from dotenv import load_dotenv
+load_dotenv()
 
  
 
@@ -13,20 +14,20 @@ import random
 '''===========================DB CONNECTION==============================='''
 import psycopg2
 conn = psycopg2.connect(
-    host=os.getenv("host"),
-    database=os.getenv("database"),
-    user=os.getenv("user"),
-    password=os.getenv("password")
+    host=os.environ.get('host'),
+    database=os.environ.get('database'),
+    user=os.environ.get('user'),
+    password=os.environ.get('password')
+    
 )
 
 cursor = conn.cursor()
 '''=========================TELEGRAM==============================='''
 
 
+API_KEY = os.environ.get('API_KEY')
 
-API_KEY = os.getenv('API_KEY')
-
-bot = telebot.TeleBot('5051244909:AAENSR45-6Vi25dOQrpRWeSfL5TvBub0SnE',parse_mode='None') 
+bot = telebot.TeleBot(API_KEY,parse_mode='None')
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
@@ -71,7 +72,7 @@ def test2(message):
     try:
         cursor.execute("INSERT INTO photos (unique_id ,image,name) VALUES (%s,%s,%s)", (unique_id,data,name))
         conn.commit()
-        link='https://qr-code-generator.herokuapp.com/?image='+unique_id
+        link='https://qr-code-generator-telebot.herokuapp.com/?image='+unique_id
         img = pyqrcode.create(link)
         img.png('myqr.png', scale = 6)
         bot.send_photo(message.chat.id, open('myqr.png', 'rb'))
