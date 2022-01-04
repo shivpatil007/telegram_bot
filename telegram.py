@@ -85,6 +85,14 @@ def test2(message):
         print(e)
     
 
+
+
+
+
+
+
+
+
 bot.polling()
     
 
