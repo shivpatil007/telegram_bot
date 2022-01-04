@@ -22,6 +22,7 @@ conn = psycopg2.connect(
 )
 
 cursor = conn.cursor()
+
 '''=========================TELEGRAM==============================='''
 
 
@@ -83,8 +84,6 @@ def test2(message):
         bot.reply_to(message, "ERROR!!! not supported with this format")
         print(e)
     
-
-
 
 bot.polling()
     
